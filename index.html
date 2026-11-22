@@ -200,6 +200,20 @@ table.mac th.bad{color:var(--bad)} table.mac th.good{color:var(--good)}
 .ref span{color:var(--muted);font-size:12px}
 .ref .go{color:var(--accent);font-weight:700;flex:none}
 
+/* ============ 간지 ============ */
+.slide.slide-divider{background:linear-gradient(135deg,#3f3d9e 0%,#6a4bc4 55%,#b75aa8 100%);color:#fff;padding:0 96px;justify-content:center}
+.divider{display:flex;align-items:center;gap:48px}
+.dv-num{font-size:170px;font-weight:800;letter-spacing:-.05em;line-height:1;color:rgba(255,255,255,.28)}
+.dv-body{border-left:2px solid rgba(255,255,255,.35);padding-left:44px}
+.dv-title{font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1.2}
+.dv-sub{font-size:20px;font-weight:500;color:rgba(255,255,255,.82);margin-top:14px}
+
+/* ============ 번호 목록 ============ */
+.numlist{list-style:none;counter-reset:n;display:grid;gap:24px;margin-top:30px}
+.numlist li{counter-increment:n;position:relative;padding-left:52px;font-size:22px;line-height:1.5;color:#3a3a4c}
+.numlist li::before{content:counter(n) ".";position:absolute;left:0;top:0;font-weight:800;color:var(--accent);font-size:23px;width:38px;text-align:right}
+.numlist li b{color:var(--text);margin-right:6px}
+
 /* ============ 차트 ============ */
 .chart-card{background:#fff;border-radius:var(--radius);padding:16px 18px 12px;box-shadow:0 0 0 1px var(--card-line)}
 .chart-card h3{font-size:15.5px;margin-bottom:1px}
@@ -303,6 +317,9 @@ body.fs .slide{border-radius:0}
   body.doc .toolbar{display:none}
   .toolbar{position:sticky;bottom:0;background:rgba(248,247,252,.95)}
   .timer,.counter{display:none}
+  .slide.slide-divider{padding:44px 24px;min-height:220px}
+  .divider{gap:20px}.dv-num{font-size:72px}.dv-body{padding-left:20px}.dv-title{font-size:28px}.dv-sub{font-size:15px}
+  .numlist{gap:14px;margin-top:16px}.numlist li{font-size:15.5px;padding-left:30px}.numlist li::before{font-size:16px;width:24px}
   h1{font-size:34px} h2{font-size:25px} .lead{font-size:15px} .big-q{font-size:21px}
   .g2,.g3,.g4,.g5,.split{grid-template-columns:1fr !important}
   .steps.row{grid-auto-flow:row}
@@ -491,6 +508,18 @@ function shot(src, alt, caption, placeholder, style=''){
   </div>`;
 }
 
+/* ---------- 간지 ---------- */
+function divider(sec, num, title, sub){
+  return {sec, nav:`간지 · ${title}`, divider:true, html:`
+<div class="divider">
+  <div class="dv-num">${num}</div>
+  <div class="dv-body">
+    <div class="dv-title">${title}</div>
+    <div class="dv-sub">${sub}</div>
+  </div>
+</div>`};
+}
+
 /* ---------- 차트 ---------- */
 function pisaChart(){
   const data = [[2006,556],[2012,536],[2022,515],[2025,501]];
@@ -557,6 +586,8 @@ const SLIDES = [
   <div class="card"><div class="n">04</div><div class="t">Brisk 인물 토론</div><div class="m">수업 사례 + 직접 체험</div></div>
   <div class="card"><div class="n">05</div><div class="t">마무리</div><div class="m">유의점 · 질문과 소감</div></div>
 </div>`},
+
+divider('s1','01','왜 지금 읽기인가','읽기 역량 데이터 · AI 부정행위 · 인지적 오프로딩 · AI의 역할'),
 
 /* 여는 질문 */
 {sec:'s1', nav:'여는 질문', html:`
@@ -720,6 +751,8 @@ ${src('gerlich','aaai')}`},
 <div class="callout mt-l">AI는 문턱을 낮추고, 생각은 학생이 한다.
 <span class="sub">이 기준으로 세 가지 사례를 봅니다. ① 교사의 수업 준비 ② 학생의 읽기 지원 ③ 학생의 해석 끌어내기</span></div>`},
 
+divider('s2','02','NotebookLM으로 수업 준비하기','사례 ① · 교사의 판단을 돕는 AI'),
+
 /* 사례 ① - NotebookLM */
 {sec:'s2', nav:'NotebookLM으로 수업 준비하기', html:`
 <div class="kicker"><span class="chip">2. 사례 ①</span><span class="chip green">Facilitate: 교사의 판단을 돕는다</span></div>
@@ -773,6 +806,8 @@ ${src('gerlich','aaai')}`},
     <div class="btn-row" style="margin-top:auto">${linkBtn(CONFIG.PADLET_BIGDATA,'🧪 패들렛 샌드박스 열기')}</div>
   </div>
 </div>`},
+
+divider('s3','03','적응형 독해 진단·비계 시스템','사례 ② · 학생이 스스로 읽어내게 돕는 AI'),
 
 /* 사례 ② - 캡스톤 1 */
 {sec:'s3', nav:'적응형 독해 진단·비계 시스템', html:`
@@ -835,6 +870,8 @@ ${src('gerlich','aaai')}`},
   <span class="xs muted">학생 데모 계정 30001/테스트1 ~ 30006/테스트6 · 비밀번호 1234</span>
 </div>`},
 
+divider('s4','04','Brisk 인물 토론','사례 ③ · 학생의 해석을 끌어내는 AI + 직접 체험'),
+
 /* 사례 ③ - Brisk */
 {sec:'s4', nav:'One Lucky Sunday 인물 토론', html:`
 <div class="kicker"><span class="chip">4. 사례 ③</span><span class="chip green">Facilitate: 학생의 해석을 끌어낸다</span></div>
@@ -877,19 +914,21 @@ ${src('gerlich','aaai')}`},
 <h3 class="mt">한 문장 공유: 이 활동에서 AI는 읽기를 대신했나요, 촉진했나요?</h3>
 ${board('practice','대신했다 / 촉진했다 + 이유 한 문장')}`},
 
+divider('s5','05','마무리','AI 읽기 지도 유의점 · 질문과 소감'),
+
 /* 유의점 */
 {sec:'s5', nav:'AI 읽기 지도 유의점 7', html:`
 <div class="kicker"><span class="chip">5. 마무리</span></div>
 <h2>AI를 활용한 읽기 학습 지도, 유의할 점</h2>
-<div class="grid g4 mt" style="grid-template-rows:1fr 1fr;flex:1">
-  <div class="card"><div class="label">01 · 순서</div><h3>먼저 읽고, 나중에 켠다</h3><p class="sm">첫 이해와 첫 해석은 학생 손으로. 노트 쓰기 효과가 근거입니다.</p></div>
-  <div class="card"><div class="label">02 · 역할</div><h3>답이 아니라 질문</h3><p class="sm">AI를 요약기가 아니라 힌트, 되묻기, 반론 상대로 설정합니다.</p></div>
-  <div class="card"><div class="label">03 · 착각</div><h3>이해한 느낌을 경계하기</h3><p class="sm">AI 없이 다시 요약하기 같은 확인 활동을 반드시 넣습니다.</p></div>
-  <div class="card"><div class="label">04 · 근거</div><h3>원문으로 돌아가기</h3><p class="sm">AI의 말은 지문과 대조해 검증하게 합니다.</p></div>
-  <div class="card"><div class="label">05 · 수준</div><h3>수준별로 다르게</h3><p class="sm">저수행 학생은 어휘·해독 지원, 상위 학생은 비판적 읽기에 씁니다.</p></div>
-  <div class="card"><div class="label">06 · 평가</div><h3>과정을 기록하고 평가하기</h3><p class="sm">결과물보다 질문과 대화의 흔적을 봅니다.</p></div>
-  <div class="card" style="grid-column:span 2"><div class="label">07 · 안전</div><h3>개인정보와 연령 기준</h3><p class="sm">도구별 이용 연령, 학생 계정 운영 방식, 입력하면 안 되는 정보를 미리 확인하고 안내합니다.</p></div>
-</div>`},
+<ol class="numlist mt">
+  <li><b>먼저 읽고, 나중에 켠다.</b> 첫 이해와 첫 해석은 학생 손으로 합니다. 노트 쓰기 효과가 근거입니다.</li>
+  <li><b>답이 아니라 질문을 받게 한다.</b> AI를 요약기가 아니라 힌트, 되묻기, 반론 상대로 설정합니다.</li>
+  <li><b>이해한 느낌을 경계한다.</b> AI 없이 다시 요약하기 같은 확인 활동을 반드시 넣습니다.</li>
+  <li><b>원문으로 돌아가게 한다.</b> AI의 말은 지문과 대조해 검증하게 합니다.</li>
+  <li><b>수준별로 다르게 쓴다.</b> 저수행 학생은 어휘·해독 지원, 상위 학생은 비판적 읽기에 씁니다.</li>
+  <li><b>과정을 기록하고 평가한다.</b> 결과물보다 질문과 대화의 흔적을 봅니다.</li>
+  <li><b>개인정보와 연령 기준을 확인한다.</b> 도구별 이용 연령, 학생 계정 운영 방식, 입력하면 안 되는 정보를 미리 안내합니다.</li>
+</ol>`},
 
 /* 맺음말 */
 {sec:'s5', nav:'맺음말', html:`
@@ -931,7 +970,7 @@ const slideId = (s,i) => s.id || 'slide-'+i;
 const isMobile = () => window.innerWidth < 760;
 let cur = 0, mode = 'present';
 
-stage.innerHTML = SLIDES.map((s,i)=>`<div class="frame" id="${slideId(s,i)}" data-i="${i}"><section class="slide">${s.html}</section></div>`).join('');
+stage.innerHTML = SLIDES.map((s,i)=>`<div class="frame" id="${slideId(s,i)}" data-i="${i}"><section class="slide${s.divider?' slide-divider':''}">${s.html}</section></div>`).join('');
 const tocHTML = SECTIONS.map(sec=>{
   const items = SLIDES.map((s,i)=>({s,i})).filter(o=>o.s.sec===sec.id);
   return `<div class="toc-group"><div class="toc-head"><span>${sec.name}</span><span class="min">${sec.min}</span></div>
