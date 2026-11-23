@@ -350,6 +350,8 @@ body.fs .slide{border-radius:0}
   .slide{transform:none !important;border-radius:0 !important;box-shadow:none !important;animation:none !important}
   .reveal-box{display:block !important}
   .quiz .answer{display:block !important}
+  .board .notes:has(.empty){display:none}
+  .board:has(.empty)::after{content:"웹앱에서 실시간으로 응답을 남기는 공간입니다";display:flex;flex:1;align-items:center;justify-content:center;color:#9a9ab0;font-size:16px;border:2px dashed #d9d7ef;border-radius:12px;min-height:120px}
 }
 
 </style>
@@ -1071,9 +1073,13 @@ $('#qrModal').onclick = e=>{ if(e.target.id==='qrModal') $('#qrModal').classList
 $('#qrCopy').onclick = async ()=>{ try{ await navigator.clipboard.writeText(participantURL()); toast('주소를 복사했어요'); }catch(_){ toast(participantURL()); } };
 
 /* PDF: 인쇄 대화상자 → 'PDF로 저장' (16:9, 1장 = 1쪽) */
+/* PDF: 미리 만들어 둔 16:9 슬라이드 PDF를 내려받기 (PPT를 PDF로 저장한 것과 같은 형태) */
+const PDF_FILE = 'ai-reading-slides.pdf';
 function savePDF(){
-  toast('인쇄 창에서 대상을 ‘PDF로 저장’으로 선택하세요');
-  setTimeout(()=>window.print(), 350);
+  const a = document.createElement('a');
+  a.href = PDF_FILE; a.download = '대신 읽어주는 AI에서 읽기를 돕는 AI로.pdf';
+  document.body.appendChild(a); a.click(); a.remove();
+  toast('16:9 슬라이드 PDF를 내려받습니다');
 }
 
 document.addEventListener('keydown', e=>{
